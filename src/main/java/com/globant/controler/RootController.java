@@ -27,8 +27,8 @@ public class RootController {
 
         this.registerUserController = new RegisterUserController(view, systemService);
         this.loginUserController = new LoginUserController(view);
-        this.viewWalletBalanceController = ViewWalletBalanceController.getInstance();
-        this.depositController = DepositController.getInstance();
+        this.viewWalletBalanceController = ViewWalletBalanceController.getInstance(viewLogged, systemService);
+        this.depositController = DepositController.getInstance(viewLogged, systemService);
         this.exchangeController = new ExchangeController();
     }
 

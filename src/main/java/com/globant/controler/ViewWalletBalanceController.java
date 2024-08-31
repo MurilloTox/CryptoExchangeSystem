@@ -13,9 +13,9 @@ public class ViewWalletBalanceController {
         this.systemService = systemService;
     }
 
-    public static ViewWalletBalanceController getInstance() {
+    public static ViewWalletBalanceController getInstance(ConsoleLoggedView consoleLoggedView, SystemService systemService) {
         if (instance == null) {
-            instance = new ViewWalletBalanceController(ConsoleLoggedView.getInstance(), SystemService.getInstance());
+            instance = new ViewWalletBalanceController(consoleLoggedView, systemService);
         }
         return instance;
     }

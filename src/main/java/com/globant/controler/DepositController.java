@@ -1,10 +1,8 @@
 package com.globant.controler;
 
-import com.globant.model.User;
 import com.globant.service.SystemService;
 import com.globant.service.UnknownUserException;
 import com.globant.view.ConsoleLoggedView;
-import com.globant.view.ConsoleView;
 
 import java.math.BigDecimal;
 
@@ -18,9 +16,9 @@ public class DepositController {
         this.systemService = systemService;
     }
 
-    public static DepositController getInstance() {
+    public static DepositController getInstance(ConsoleLoggedView view, SystemService systemService) {
         if (instance == null) {
-            instance = new DepositController(ConsoleLoggedView.getInstance(), SystemService.getInstance());
+            instance = new DepositController(view, systemService);
         }
         return instance;
     }
