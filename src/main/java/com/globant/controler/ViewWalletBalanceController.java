@@ -21,6 +21,6 @@ public class ViewWalletBalanceController {
     }
 
     public void execute() {
-
+        view.showUserBalance(systemService.currentUserBalance());
     }
 }
