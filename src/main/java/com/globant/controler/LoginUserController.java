@@ -3,6 +3,7 @@ package com.globant.controler;
 import com.globant.model.User;
 import com.globant.service.SystemService;
 import com.globant.service.UnknownUserException;
+import com.globant.view.ConsoleLoggedView;
 import com.globant.view.ConsoleView;
 
 public class LoginUserController {
@@ -18,7 +19,7 @@ public class LoginUserController {
         try {
             for (User user:User.listUsers){
                 if (userInfo[0].equals(user.getEmail()) && userInfo[0].equals(user.getPassword())){
-                    System.out.println("Successfully logged in");
+                    view.showSuccessMessage("Successfully logged in");
                     notVerified=false;
                 }
             }
@@ -38,9 +39,8 @@ public class LoginUserController {
                         execute();
                         break;
                     case 2:
-                        //RootController rootController =
-                        RootController.getInstance(ConsoleView.getInstance(), SystemService.getInstance()).run();
-
+                        RootController.getInstance(ConsoleView.getInstance(), SystemService.getInstance(), ConsoleLoggedView.getInstance()).run();
+                        break;
                 }
             }
         }

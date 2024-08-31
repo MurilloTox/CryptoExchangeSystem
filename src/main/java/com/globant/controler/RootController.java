@@ -1,11 +1,13 @@
 package com.globant.controler;
 
 import com.globant.service.SystemService;
+import com.globant.view.ConsoleLoggedView;
 import com.globant.view.ConsoleView;
 
 public class RootController {
     private static RootController instance;
     private final ConsoleView view;
+    private final ConsoleLoggedView viewLogged;
     private final SystemService systemService;
     private final RegisterUserController registerUserController;
     private final LoginUserController loginUserController;
@@ -16,9 +18,10 @@ public class RootController {
 
 
 
-    private RootController(ConsoleView view, SystemService systemService) {
+    private RootController(ConsoleView view, SystemService systemService , ConsoleLoggedView viewLogged) {
         this.view = view;
         this.systemService = systemService;
+        this.viewLogged = viewLogged;
 
         this.registerUserController = new RegisterUserController(view, systemService);
         this.loginUserController = new LoginUserController(view);
@@ -27,9 +30,9 @@ public class RootController {
         this.exchangeController = new ExchangeController();
     }
 
-    public static RootController getInstance(ConsoleView view, SystemService systemService) {
+    public static RootController getInstance(ConsoleView view, SystemService systemService, ConsoleLoggedView viewLogged) {
         if (instance == null) {
-            instance = new RootController(ConsoleView.getInstance(), SystemService.getInstance());
+            instance = new RootController(ConsoleView.getInstance(), SystemService.getInstance(), ConsoleLoggedView.getInstance());
         }
         return instance;
     }
@@ -46,15 +49,15 @@ public class RootController {
                     loginUserController.execute();
                 case 3:
                     System.exit(0);
-                /*default:
-                    view.showError("Invalid option. Please try again.");*/
+                default:
+                    view.showError("Invalid option. Please try again.");
             }
         }
     }
 
     public void runLogged() {
         while (true) {
-            int choice = view.getUserLoggedChoice();
+            int choice = viewLogged.getUserLoggedChoice();
             switch (choice) {
                 case 1:
                     depositController.execute();

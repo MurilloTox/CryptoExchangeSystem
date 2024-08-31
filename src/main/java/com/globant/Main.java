@@ -3,6 +3,7 @@ package com.globant;
 import com.globant.controler.RootController;
 import com.globant.model.User;
 import com.globant.service.SystemService;
+import com.globant.view.ConsoleLoggedView;
 import com.globant.view.ConsoleView;
 
 import java.math.BigDecimal;
@@ -34,7 +35,8 @@ public class Main {
         System.out.println(user1.getDigitalWallet());*/
         ConsoleView consoleView = ConsoleView.getInstance();
         SystemService systemService = SystemService.getInstance();
-        RootController rootController = RootController.getInstance(consoleView, systemService);
+        ConsoleLoggedView consoleLoggedView = ConsoleLoggedView.getInstance();
+        RootController rootController = RootController.getInstance(consoleView, systemService, consoleLoggedView);
         rootController.run();
 
 
