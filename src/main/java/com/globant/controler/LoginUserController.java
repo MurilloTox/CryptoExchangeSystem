@@ -1,6 +1,7 @@
 package com.globant.controler;
 
 import com.globant.model.User;
+import com.globant.service.SystemService;
 import com.globant.service.UnknownUserException;
 import com.globant.view.ConsoleView;
 
@@ -28,18 +29,21 @@ public class LoginUserController {
             System.out.println(e.getMessage());
         }
 
-        /*if (notVerified){
+        if (notVerified){
             while(true){
-                int choice = view.getUserChoice();
+                int choice = view.getNotVerifiedUserChoice();
                 System.out.println(" ");
                 switch(choice){
                     case 1:
                         execute();
                         break;
                     case 2:
+                        //RootController rootController =
+                        RootController.getInstance(ConsoleView.getInstance(), SystemService.getInstance()).run();
+
                 }
             }
-        }*/
+        }
     }
 
 }

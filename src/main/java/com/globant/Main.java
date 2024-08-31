@@ -32,9 +32,9 @@ public class Main {
         BigDecimal bd=new BigDecimal("234.34");
         user1.depositMoney(bd);
         System.out.println(user1.getDigitalWallet());*/
-        ConsoleView consoleView = new ConsoleView();
-        SystemService systemService = new SystemService();
-        RootController rootController = new RootController(consoleView, systemService);
+        ConsoleView consoleView = ConsoleView.getInstance();
+        SystemService systemService = SystemService.getInstance();
+        RootController rootController = RootController.getInstance(consoleView, systemService);
         rootController.run();
 
 

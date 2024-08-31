@@ -7,6 +7,16 @@ import java.util.Scanner;
 public class ConsoleView {
     private final Scanner scanner = new Scanner(System.in);
     private static final int INVALID_CHOICE = -1;
+    private static ConsoleView instance;
+
+    private ConsoleView(){}
+
+    public static ConsoleView getInstance(){
+        if(instance == null){
+            instance = new ConsoleView();
+        }
+        return instance;
+    }
 
     public int getUserChoice() {
         System.out.println("Choose one option to continue:");
