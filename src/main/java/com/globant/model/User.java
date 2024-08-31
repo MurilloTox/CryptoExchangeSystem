@@ -3,6 +3,7 @@ package com.globant.model;
 import com.globant.service.SystemService;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -52,13 +53,12 @@ public class User {
         digitalWallet.depositToWallet(amount);
     }
 
-    public String getName() {
-        return name;
+    public String getWalletBalance(){
+        return digitalWallet.toString();
     }
 
-
-    public String getLastName() {
-        return lastName;
+    public String getFullName(){
+        return name + " " + lastName;
     }
 
     public String getEmail() {
@@ -101,7 +101,7 @@ public class User {
 
         private void depositToWallet(BigDecimal amount){
             if (amount.compareTo(BigDecimal.ZERO) > 0) {
-                money = money.add(amount);
+                money = money.add(amount.setScale(2, RoundingMode.HALF_UP));
             } else {
                 throw new IllegalArgumentException("El monto a depositar no es válido.");
             }
@@ -111,9 +111,9 @@ public class User {
         public String toString() {
             return "The balance of your digitalWallet of " +
                     "customer with id " + idCustomer +
-                    " is , money=" + money +
-                    " $, BitCoin=" + BitCoin +
-                    " BTC, Etherium=" + Etherium + " ETR";
+                    " is , fiat money= " + money +
+                    "$, BitCoin= " + BitCoin +
+                    " BTC, Etherium= " + Etherium + " ETR";
         }
     }
 

@@ -1,5 +1,6 @@
 package com.globant.service;
 
+import com.globant.controler.RootController;
 import com.globant.model.User;
 
 import java.math.BigDecimal;
@@ -35,6 +36,10 @@ public class SystemService {
                 u.depositMoney(amount);
             }
         }
+    }
+
+    public String currentUserBalance() {
+        return RootController.getInstance().getCurrentUser().getWalletBalance();
     }
 
 }

@@ -46,6 +46,10 @@ public class ConsoleLoggedView {
         }
     }
 
+    public void showUserBalance(String s) {
+        System.out.println(s);
+    }
+
     public void showSuccessMessage(String s) {
         System.out.println(s);
     }

@@ -100,7 +100,7 @@ public class RootController {
         return currentUser;
     }
 
-    public void setCurrentUser(User user) {
+    protected void setCurrentUser(User user) {
         this.currentUser = user;
     }
 
