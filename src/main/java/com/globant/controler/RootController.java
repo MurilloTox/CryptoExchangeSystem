@@ -4,6 +4,7 @@ import com.globant.service.SystemService;
 import com.globant.view.ConsoleView;
 
 public class RootController {
+    private static RootController instance;
     private final ConsoleView view;
     private final SystemService systemService;
     private final RegisterUserController registerUserController;
@@ -15,7 +16,7 @@ public class RootController {
 
 
 
-    public RootController(ConsoleView view, SystemService systemService) {
+    private RootController(ConsoleView view, SystemService systemService) {
         this.view = view;
         this.systemService = systemService;
 
@@ -24,6 +25,13 @@ public class RootController {
         this.viewWalletBalanceController = new ViewWalletBalanceController();
         this.depositController = new DepositController(view, systemService);
         this.exchangeController = new ExchangeController();
+    }
+
+    public static RootController getInstance(ConsoleView view, SystemService systemService) {
+        if (instance == null) {
+            instance = new RootController(ConsoleView.getInstance(), SystemService.getInstance());
+        }
+        return instance;
     }
 
     public void run(){
@@ -36,8 +44,10 @@ public class RootController {
                     break;
                 case 2:
                     loginUserController.execute();
-
-
+                case 3:
+                    System.exit(0);
+                /*default:
+                    view.showError("Invalid option. Please try again.");*/
             }
         }
     }

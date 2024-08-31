@@ -8,8 +8,16 @@ import java.util.Map;
 import java.util.Random;
 
 public class SystemService {
+    private static SystemService instance;
 
-    public SystemService() {
+    private SystemService() {
+    }
+
+    public static SystemService getInstance() {
+        if (instance == null) {
+            instance = new SystemService();
+        }
+        return instance;
     }
 
     public void deposit(){
