@@ -7,7 +7,7 @@ import com.globant.view.ConsoleLoggedView;
 import com.globant.view.ConsoleView;
 
 public class LoginUserController {
-    private ConsoleView view;
+    private final ConsoleView view;
 
     public LoginUserController(ConsoleView view) {
         this.view = view;
