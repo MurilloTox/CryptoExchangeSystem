@@ -18,7 +18,7 @@ public class LoginUserController {
         boolean notVerified=true;
         try {
             for (User user:User.listUsers){
-                if (userInfo[0].equals(user.getEmail()) && userInfo[0].equals(user.getPassword())){
+                if (userInfo[0].equals(user.getEmail()) && userInfo[1].equals(user.getPassword())){
                     view.showSuccessMessage("Successfully logged in");
                     notVerified=false;
                 }
