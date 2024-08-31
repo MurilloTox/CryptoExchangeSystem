@@ -17,10 +17,12 @@ public class LoginUserController {
         String[] userInfo=view.getLoginUser();
         boolean notVerified=true;
         try {
-            for (User user:User.listUsers){
+            for (User user:SystemService.getInstance().getUsers().values()){
                 if (userInfo[0].equals(user.getEmail()) && userInfo[1].equals(user.getPassword())){
                     view.showSuccessMessage("Successfully logged in");
+                    RootController.getInstance().setCurrentUser(user);
                     notVerified=false;
+                    break;
                 }
             }
             if (notVerified){

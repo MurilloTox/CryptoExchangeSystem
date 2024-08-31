@@ -1,5 +1,7 @@
 package com.globant.model;
 
+import com.globant.service.SystemService;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,8 +12,7 @@ public class User {
     private String lastName;
     private String email;
     private String password;
-    public static List<User> listUsers=new ArrayList<User>();
-    //Hacer que esta lista sea privada, tal vez con un metodo y reemplazar las referencias que le he hecho
+    private static List<User> listUsers=new ArrayList<>();
     private int id;
     private DigitalWallet digitalWallet;
 
@@ -22,11 +23,11 @@ public class User {
         this.email = email;
         this.password = password;
         this.id = newID();
-        listUsers.add(this);
         DigitalWallet digitalWallet = new DigitalWallet(id);
         this.digitalWallet = digitalWallet;
         System.out.println("User "+ id +" created");
-
+        listUsers.add(this);
+        SystemService.getInstance().addUsers(this);
     }
 
     private int newID() {
@@ -35,7 +36,7 @@ public class User {
         boolean idNotNew =true;
 
         while (idNotNew){
-            newID = 100000 + rd.nextInt(900000);
+            newID = 1000 + rd.nextInt(9000);
             idNotNew =false;
             for (User u : listUsers) {
                 if (u.getId() == newID) {
@@ -46,6 +47,44 @@ public class User {
         }
         return newID;
     }
+
+    public void depositMoney(BigDecimal amount){
+        digitalWallet.depositToWallet(amount);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "name='" + name + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", id=" + id +
+                '}';
+    }
+
 
     private class DigitalWallet{
         private int idCustomer;
@@ -78,50 +117,4 @@ public class User {
         }
     }
 
-    public void depositMoney(BigDecimal amount){
-        digitalWallet.depositToWallet(amount);
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public DigitalWallet getDigitalWallet() {
-        return digitalWallet;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "name='" + name + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", id=" + id +
-                '}';
-    }
 }

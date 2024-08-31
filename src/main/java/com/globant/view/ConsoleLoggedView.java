@@ -45,4 +45,9 @@ public class ConsoleLoggedView {
             return getAmountInput();
         }
     }
+
+    public void showSuccessMessage(String s) {
+        System.out.println(s);
+    }
+
 }
