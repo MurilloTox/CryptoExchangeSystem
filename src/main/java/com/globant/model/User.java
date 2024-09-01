@@ -53,6 +53,30 @@ public class User {
         digitalWallet.depositToWallet(amount);
     }
 
+    public BigDecimal getCurrentMoney(){
+        return digitalWallet.getMoney();
+    }
+
+    public void setCurrentMoney(BigDecimal amount){
+        digitalWallet.setMoney(amount);
+    }
+
+    public BigDecimal consultCurrentBitcoin(){
+        return digitalWallet.getBitCoinOwned();
+    }
+
+    public void changeBitcoin(BigDecimal amount){
+        digitalWallet.setBitCoinOwned(amount);
+    }
+
+    public BigDecimal consultCurrentEthereum(){
+        return digitalWallet.getEthereumOwned();
+    }
+
+    public void changeEthereum(BigDecimal amount){
+        digitalWallet.setEthereumOwned(amount);
+    }
+
     public String getWalletBalance(){
         return digitalWallet.toString();
     }
@@ -88,30 +112,42 @@ public class User {
     private class DigitalWallet{
         private int idCustomer;
         private BigDecimal money;
-        private BigDecimal BitCoinOwned;
-        private BigDecimal EtheriumOwned;
+        private BigDecimal bitCoinOwned;
+        private BigDecimal ethereumOwned;
 
         private DigitalWallet(int idCliente){
             this.idCustomer = idCliente;
             money = new BigDecimal("0.00");
-            BitCoinOwned = new BigDecimal("0.00");
-            EtheriumOwned = new BigDecimal("0.00");
+            bitCoinOwned = new BigDecimal("0.00");
+            ethereumOwned = new BigDecimal("0.00");
         }
 
         private void depositToWallet(BigDecimal amount){
-            if (amount.compareTo(BigDecimal.ZERO) > 0) {
-                money = money.add(amount.setScale(2, RoundingMode.HALF_UP));
-            } else {
-                throw new IllegalArgumentException("El monto a depositar no es válido.");
-            }
+            money = money.add(amount.setScale(2, RoundingMode.HALF_UP));
         }
 
         private BigDecimal getBitCoinOwned() {
-            return BitCoinOwned;
+            return bitCoinOwned;
         }
 
-        private void setBitCoinOwned(BigDecimal bitCoinOwned) {
-            BitCoinOwned = bitCoinOwned;
+        private void setBitCoinOwned(BigDecimal amount) {
+            bitCoinOwned=SystemService.getInstance().bigDecimalManagement(amount, bitCoinOwned);
+        }
+
+        public BigDecimal getEthereumOwned() {
+            return ethereumOwned;
+        }
+
+        public void setEthereumOwned(BigDecimal amount) {
+            ethereumOwned=SystemService.getInstance().bigDecimalManagement(amount, ethereumOwned);
+        }
+
+        private BigDecimal getMoney() {
+            return money;
+        }
+
+        private void setMoney(BigDecimal amount) {
+            money=SystemService.getInstance().bigDecimalManagement(amount, money);
         }
 
         @Override
@@ -119,8 +155,8 @@ public class User {
             return "The balance of your digitalWallet of " +
                     "customer with id " + idCustomer +
                     " is , fiat money= " + money +
-                    "$, BitCoinOwned= " + BitCoinOwned +
-                    " BTC, EtheriumOwned= " + EtheriumOwned + " ETR";
+                    "$, bitCoinOwned= " + bitCoinOwned +
+                    " BTC, ethereumOwned= " + ethereumOwned + " ETR";
         }
     }
 

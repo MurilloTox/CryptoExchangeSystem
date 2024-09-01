@@ -23,15 +23,11 @@ public abstract class CrytoCurrency {
         return identifier;
     }
 
-    protected BigDecimal getInicialAmount() {
-        return inicialAmount;
-    }
-
     protected void setAmount(BigDecimal amount) {
         this.inicialAmount = amount;
     }
 
-    protected BigDecimal getCurrentPrice() {
+    public BigDecimal getCurrentPrice() {
         return currentPrice;
     }
 

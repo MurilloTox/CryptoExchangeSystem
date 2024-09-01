@@ -1,9 +1,10 @@
 package com.globant.service;
 
 import com.globant.controler.RootController;
-import com.globant.model.User;
+import com.globant.model.*;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.HashMap;
 
 
@@ -38,8 +39,34 @@ public class SystemService {
         }
     }
 
+    public BigDecimal bigDecimalManagement(BigDecimal amount, BigDecimal total) {
+        return total = total.add(amount.setScale(2, RoundingMode.HALF_UP));
+    }
+
     public String currentUserBalance() {
         return RootController.getInstance().getCurrentUser().getWalletBalance();
     }
+
+    public void storageBitcoinManegement(BigDecimal amount) {
+        BigDecimal currentBTC= ExchangeStorage.getInstance().getBitcoinAvailable();
+        currentBTC = currentBTC.subtract(amount);
+        ExchangeStorage.getInstance().setBitcoinAvailable(currentBTC);
+    }
+
+    public void userWalletManagement(BigDecimal amount, CrytoCurrency currency, BigDecimal currecyAmount) {
+        User user = RootController.getInstance().getCurrentUser();
+        BigDecimal userMoney = RootController.getInstance().getCurrentUser().getCurrentMoney();
+        user.setCurrentMoney(userMoney.add(amount.setScale(2, RoundingMode.HALF_UP)));
+        if (currency.getClass()== Bitcoin.class){
+            BigDecimal userCurrency = user.consultCurrentBitcoin();
+            user.changeBitcoin(userCurrency.add(currecyAmount.setScale(2, RoundingMode.HALF_UP)));
+        } else if (currency.getClass()== Ethereum.class) {
+            BigDecimal userCurrency = user.consultCurrentEthereum();
+            user.changeEthereum(userCurrency.add(amount.setScale(2, RoundingMode.HALF_UP)));
+        }
+
+    }
+
+
 
 }

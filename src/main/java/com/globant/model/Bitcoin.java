@@ -7,7 +7,7 @@ public class Bitcoin extends CrytoCurrency implements Fluctuable {
 
     private Bitcoin() {
         super("Bitcoin", "BTC",
-                new BigDecimal("500.00"), new BigDecimal("5000.00"));
+                new BigDecimal("5000.00"), new BigDecimal("500.00"));
     }
 
     public static Bitcoin getInstance() {
