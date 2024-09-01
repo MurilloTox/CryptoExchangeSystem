@@ -37,16 +37,20 @@ public class ConsoleLoggedView {
 
     public BigDecimal getAmountInput() {
         try {
-            System.out.print("Enter the amount: ");
+            System.out.print("Enter the inicialAmount: ");
             return scanner.nextBigDecimal();
         } catch (InputMismatchException e) {
-            System.out.println("Invalid amount format. Please enter a valid number.");
+            System.out.println("Invalid inicialAmount format. Please enter a valid number.");
             scanner.nextLine();
             return getAmountInput();
         }
     }
 
     public void showUserBalance(String s) {
+        System.out.println(s);
+    }
+
+    public void showError(String s) {
         System.out.println(s);
     }
 

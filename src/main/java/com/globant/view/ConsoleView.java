@@ -84,6 +84,7 @@ public class ConsoleView {
     }
 
     public void showError(String s) {
+        System.out.println(s);
     }
 
     public void showSuccessMessage(String s) {

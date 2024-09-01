@@ -73,7 +73,6 @@ public class User {
         return id;
     }
 
-
     @Override
     public String toString() {
         return "User{" +
@@ -89,14 +88,14 @@ public class User {
     private class DigitalWallet{
         private int idCustomer;
         private BigDecimal money;
-        private BigDecimal BitCoin;
-        private BigDecimal Etherium;
+        private BigDecimal BitCoinOwned;
+        private BigDecimal EtheriumOwned;
 
         private DigitalWallet(int idCliente){
             this.idCustomer = idCliente;
             money = new BigDecimal("0.00");
-            BitCoin = new BigDecimal("0.00");
-            Etherium = new BigDecimal("0.00");
+            BitCoinOwned = new BigDecimal("0.00");
+            EtheriumOwned = new BigDecimal("0.00");
         }
 
         private void depositToWallet(BigDecimal amount){
@@ -107,13 +106,21 @@ public class User {
             }
         }
 
+        private BigDecimal getBitCoinOwned() {
+            return BitCoinOwned;
+        }
+
+        private void setBitCoinOwned(BigDecimal bitCoinOwned) {
+            BitCoinOwned = bitCoinOwned;
+        }
+
         @Override
         public String toString() {
             return "The balance of your digitalWallet of " +
                     "customer with id " + idCustomer +
                     " is , fiat money= " + money +
-                    "$, BitCoin= " + BitCoin +
-                    " BTC, Etherium= " + Etherium + " ETR";
+                    "$, BitCoinOwned= " + BitCoinOwned +
+                    " BTC, EtheriumOwned= " + EtheriumOwned + " ETR";
         }
     }
 

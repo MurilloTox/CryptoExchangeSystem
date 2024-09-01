@@ -29,7 +29,7 @@ public class RootController {
         this.loginUserController = new LoginUserController(view);
         this.viewWalletBalanceController = ViewWalletBalanceController.getInstance(viewLogged, systemService);
         this.depositController = DepositController.getInstance(viewLogged, systemService);
-        this.exchangeController = new ExchangeController();
+        this.exchangeController = ExchangeController.getInstance(viewLogged, systemService);
     }
 
     public static RootController getInstance(ConsoleView view, SystemService systemService, ConsoleLoggedView viewLogged) {
@@ -91,7 +91,7 @@ public class RootController {
                 case 7:
                     System.exit(0);
                 default:
-                    view.showError("Invalid option. Please try again.");
+                    viewLogged.showError("Invalid option. Please try again.");
             }
         }
     }
