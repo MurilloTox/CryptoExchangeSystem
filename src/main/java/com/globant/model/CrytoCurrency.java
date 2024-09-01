@@ -31,6 +31,10 @@ public abstract class CrytoCurrency {
         return currentPrice;
     }
 
+    public BigDecimal getInitialAmount() {
+        return inicialAmount;
+    }
+
     @Override
     public String toString() {
         return "CrytoCurrency{" +

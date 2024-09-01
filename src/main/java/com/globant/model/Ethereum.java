@@ -7,7 +7,7 @@ public class Ethereum extends CrytoCurrency implements Fluctuable{
 
     private Ethereum() {
         super("Etherium", "ETH",
-                new BigDecimal("9000.00"), new BigDecimal("300.00"));
+                new BigDecimal("900.00"), new BigDecimal("3500.00"));
     }
 
     public static Ethereum getInstance() {

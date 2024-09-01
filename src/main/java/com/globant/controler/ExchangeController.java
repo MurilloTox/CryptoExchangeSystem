@@ -1,6 +1,8 @@
 package com.globant.controler;
 
 import com.globant.model.Bitcoin;
+import com.globant.model.Ethereum;
+import com.globant.model.User;
 import com.globant.service.InsufficientFundsException;
 import com.globant.service.SystemService;
 import com.globant.view.ConsoleLoggedView;
@@ -28,25 +30,51 @@ public class ExchangeController {
        int choice = view.getCryptoOption();
        System.out.println(" ");
        BigDecimal amount = new BigDecimal("0.0");
-       BigDecimal userMoney = RootController.getInstance().getCurrentUser().getCurrentMoney();
+       User user = RootController.getInstance().getCurrentUser();
+       BigDecimal userMoney = user.getCurrentMoney();
        BigDecimal amountTried = new BigDecimal("0.0");
        BigDecimal currentPrice = new BigDecimal("0.0");
        try {
            switch (choice) {
+               //Agregar un controlador para cuando el amountTried es menor a $0.01
+               // Tambien la opcion de go back si alcanzo
                case 1:
                    amount = amount.add(view.getAmountCryptoInput());
                    currentPrice = Bitcoin.getInstance().getCurrentPrice();
                    amountTried = amount.multiply(currentPrice);
+                   System.out.println("Amount tried: " + amountTried);
                    if (userMoney.compareTo(amountTried) >= 0) {
+                       systemService.userMoneySubstract(user, amountTried);
                        systemService.storageBitcoinManegement(amount);
-                       systemService.userWalletManagement(amountTried, Bitcoin.getInstance(), amount);
+                       systemService.userCryptoManagement(user, Bitcoin.getInstance(), amount);
                        view.showSuccessMessage("Successful purchase.");
                    } else{
                        throw new InsufficientFundsException("Insufficient funds.");
                    }
+                   System.out.println(user.getWalletBalance());
+                   break;
+
+               case 2:
+                   amount = amount.add(view.getAmountCryptoInput());
+                   currentPrice = Ethereum.getInstance().getCurrentPrice();
+                   amountTried = amount.multiply(currentPrice).setScale(2, BigDecimal.ROUND_HALF_UP);
+                   System.out.println("Amount tried: " + amountTried);
+                   if (userMoney.compareTo(amountTried) >= 0) {
+                       systemService.userMoneySubstract(user, amountTried);
+                       systemService.storageEthereumManegement(amount);
+                       systemService.userCryptoManagement(user, Ethereum.getInstance(), amount);
+                       view.showSuccessMessage("Successful purchase.");
+                   } else{
+                       throw new InsufficientFundsException("Insufficient funds.");
+                   }
+                   System.out.println(user.getWalletBalance());
+                   break;
+
+               case 3:
+                   break;
            }
        } catch (InsufficientFundsException e) {
-           System.out.println("Exception: " + e.getMessage());
+           System.out.println(e.getMessage());
        }
     }
 }

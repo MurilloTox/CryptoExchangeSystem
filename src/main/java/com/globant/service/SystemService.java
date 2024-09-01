@@ -4,7 +4,6 @@ import com.globant.controler.RootController;
 import com.globant.model.*;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.HashMap;
 
 
@@ -39,10 +38,6 @@ public class SystemService {
         }
     }
 
-    public BigDecimal bigDecimalManagement(BigDecimal amount, BigDecimal total) {
-        return total = total.add(amount.setScale(2, RoundingMode.HALF_UP));
-    }
-
     public String currentUserBalance() {
         return RootController.getInstance().getCurrentUser().getWalletBalance();
     }
@@ -53,18 +48,26 @@ public class SystemService {
         ExchangeStorage.getInstance().setBitcoinAvailable(currentBTC);
     }
 
-    public void userWalletManagement(BigDecimal amount, CrytoCurrency currency, BigDecimal currecyAmount) {
-        User user = RootController.getInstance().getCurrentUser();
-        BigDecimal userMoney = RootController.getInstance().getCurrentUser().getCurrentMoney();
-        user.setCurrentMoney(userMoney.add(amount.setScale(2, RoundingMode.HALF_UP)));
+    public void storageEthereumManegement(BigDecimal amount) {
+        BigDecimal currentETH = ExchangeStorage.getInstance().getEthereumAvailable();
+        currentETH = currentETH.subtract(amount);
+        ExchangeStorage.getInstance().setEthereumAvailable(currentETH);
+    }
+
+    public void userMoneySubstract(User user, BigDecimal amount) {
+        BigDecimal userCurrentMoney = user.getCurrentMoney();
+        userCurrentMoney = userCurrentMoney.subtract(amount);
+        user.setCurrentMoney(userCurrentMoney);
+    }
+
+    public void userCryptoManagement(User user, CrytoCurrency currency, BigDecimal currecyAmount) {
         if (currency.getClass()== Bitcoin.class){
             BigDecimal userCurrency = user.consultCurrentBitcoin();
-            user.changeBitcoin(userCurrency.add(currecyAmount.setScale(2, RoundingMode.HALF_UP)));
+            user.changeBitcoin(userCurrency.add(currecyAmount));
         } else if (currency.getClass()== Ethereum.class) {
             BigDecimal userCurrency = user.consultCurrentEthereum();
-            user.changeEthereum(userCurrency.add(amount.setScale(2, RoundingMode.HALF_UP)));
+            user.changeEthereum(userCurrency.add(currecyAmount));
         }
-
     }
 
 

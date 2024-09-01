@@ -131,7 +131,7 @@ public class User {
         }
 
         private void setBitCoinOwned(BigDecimal amount) {
-            bitCoinOwned=SystemService.getInstance().bigDecimalManagement(amount, bitCoinOwned);
+            bitCoinOwned=amount;
         }
 
         public BigDecimal getEthereumOwned() {
@@ -139,7 +139,7 @@ public class User {
         }
 
         public void setEthereumOwned(BigDecimal amount) {
-            ethereumOwned=SystemService.getInstance().bigDecimalManagement(amount, ethereumOwned);
+            ethereumOwned=amount;
         }
 
         private BigDecimal getMoney() {
@@ -147,7 +147,7 @@ public class User {
         }
 
         private void setMoney(BigDecimal amount) {
-            money=SystemService.getInstance().bigDecimalManagement(amount, money);
+            money=amount.setScale(2, RoundingMode.HALF_UP);
         }
 
         @Override

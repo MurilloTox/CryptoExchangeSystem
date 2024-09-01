@@ -20,11 +20,11 @@ public class ExchangeStorage {
     }
 
     public BigDecimal getBitcoinAvailable(){
-        return bitcoin.getCurrentPrice();
+        return bitcoin.getInitialAmount();
     }
 
     public BigDecimal getEthereumAvailable(){
-        return ethereum.getCurrentPrice();
+        return ethereum.getInitialAmount();
     }
 
     public void setBitcoinAvailable(BigDecimal bitcoinAvailable){
