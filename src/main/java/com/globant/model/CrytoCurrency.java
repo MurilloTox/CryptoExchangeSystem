@@ -3,10 +3,10 @@ package com.globant.model;
 import java.math.BigDecimal;
 
 public abstract class CrytoCurrency {
-    protected String name;
-    protected String identifier;
-    protected BigDecimal inicialAmount;
-    protected BigDecimal currentPrice;
+    private final String name;
+    private final String identifier;
+    private BigDecimal inicialAmount;
+    private BigDecimal currentPrice;
 
     protected CrytoCurrency(String name, String identifier, BigDecimal inicialAmount, BigDecimal currentPrice) {
         this.name = name;

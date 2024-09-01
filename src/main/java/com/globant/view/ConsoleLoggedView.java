@@ -1,6 +1,5 @@
 package com.globant.view;
 
-import com.globant.controler.ExchangeController;
 import com.globant.model.ExchangeStorage;
 
 import java.math.BigDecimal;
@@ -66,7 +65,7 @@ public class ConsoleLoggedView {
     }
 
     public int getCryptoOption(){
-        System.out.print("Current storage: " + ExchangeStorage.getInstance().toString());
+        System.out.println("Current storage: " + ExchangeStorage.getInstance().toString());
         currentPrice();
         System.out.println("Choose one option to continue:");
         System.out.println("1. Bitcoin");
@@ -92,26 +91,18 @@ public class ConsoleLoggedView {
         }
     }
 
-    public BigDecimal getAmountSellMaxInput(){
-        System.out.print("Enter the maximum amount of Cryptocurrency you want to sell: ");
+    public BigDecimal getBuyMoneyInput(){
+        System.out.print("Enter the maximum amount of money you are willing to spend: ");
         try {
             return scanner.nextBigDecimal();
         } catch (InputMismatchException e) {
             System.out.println("Invalid amount format. Please enter a valid number.");
             scanner.nextLine();
-            return getAmountSellMaxInput();
+            return getBuyMoneyInput();
         }
     }
-    public BigDecimal getAmountSellMinInput(){
-        System.out.print("Enter the minimum amount of Cryptocurrency you want to sell: ");
-        try {
-            return scanner.nextBigDecimal();
-        } catch (InputMismatchException e) {
-            System.out.println("Invalid amount format. Please enter a valid number.");
-            scanner.nextLine();
-            return getAmountSellMinInput();
-        }
-    }
+
+
 
 
 

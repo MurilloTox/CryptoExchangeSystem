@@ -23,8 +23,9 @@ public class PlaceBuyOrderController {
     }
 
     protected void execute() {
-        BigDecimal maxValue = view.getAmountSellMaxInput();
-        BigDecimal minValue = view.getAmountSellMinInput();
+        int choice = view.getCryptoOption();
+        BigDecimal cryptoAmount = view.getAmountCryptoInput();
+        BigDecimal maxMoney = view.getBuyMoneyInput();
 
     }
 
