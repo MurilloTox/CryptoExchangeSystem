@@ -1,5 +1,8 @@
 package com.globant.view;
 
+import com.globant.controler.ExchangeController;
+import com.globant.model.ExchangeStorage;
+
 import java.math.BigDecimal;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -34,17 +37,62 @@ public class ConsoleLoggedView {
             return INVALID_CHOICE;
         }
     }
+    public int getUserGoBack() {
+        System.out.println("Choose one option to continue:");
+        System.out.println("1. Try again.");
+        System.out.println("2. Go back.");
+        System.out.print("Enter your choice: ");
+        try {
+            return scanner.nextInt();
+        } catch (InputMismatchException e) {
+            scanner.nextLine();
+            return INVALID_CHOICE;
+        }
+    }
 
     public BigDecimal getAmountInput() {
+        System.out.print("Enter the amount: ");
         try {
-            System.out.print("Enter the inicialAmount: ");
             return scanner.nextBigDecimal();
         } catch (InputMismatchException e) {
-            System.out.println("Invalid inicialAmount format. Please enter a valid number.");
+            System.out.println("Invalid amount format. Please enter a valid number.");
             scanner.nextLine();
             return getAmountInput();
         }
     }
+
+    public void currentPrice(){
+        System.out.println("Current market prices are: " + ExchangeStorage.getInstance().currentPrices());
+    }
+
+    public int getCryptoOption(){
+        System.out.print("Current storage: " + ExchangeStorage.getInstance().toString());
+        currentPrice();
+        System.out.println("Choose one option to continue:");
+        System.out.println("1. Bitcoin");
+        System.out.println("2. Ethereum");
+        System.out.println("3. Go back");
+        System.out.print("Enter your choice: ");
+        try {
+            return scanner.nextInt();
+        } catch (InputMismatchException e) {
+            scanner.nextLine();
+            return INVALID_CHOICE;
+        }
+    }
+
+    public BigDecimal getAmountCryptoInput(){
+        System.out.print("Enter the amount of Cryptocurrency you want to buy: ");
+        try {
+            return scanner.nextBigDecimal();
+        } catch (InputMismatchException e) {
+            System.out.println("Invalid amount format. Please enter a valid number.");
+            scanner.nextLine();
+            return getAmountInput();
+        }
+    }
+
+
 
     public void showUserBalance(String s) {
         System.out.println(s);

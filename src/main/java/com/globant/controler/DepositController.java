@@ -26,10 +26,17 @@ public class DepositController {
     public void execute() {
         try {
             BigDecimal amount = view.getAmountInput();
-            systemService.deposit(RootController.getInstance().getCurrentUser(), amount);
-            view.showSuccessMessage("The deposit was successful.");
+            if (amount.compareTo(BigDecimal.ZERO) > 0) {
+                systemService.deposit(RootController.getInstance().getCurrentUser(), amount);
+                view.showSuccessMessage("The deposit was successful.");
+            } else {
+                throw new IllegalArgumentException();
+            }
+        } catch (IllegalArgumentException e) {
+            System.out.println("Error while depositing, amount no valid.");
+            RootController.getInstance().runLogged();
         } catch (UnknownUserException e) {
-            System.out.println("Error al realizar el deposito.");
+            System.out.println("Error to find the current user.");
             RootController.getInstance().runLogged();
         }
     }
