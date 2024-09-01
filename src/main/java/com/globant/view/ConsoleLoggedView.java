@@ -88,7 +88,28 @@ public class ConsoleLoggedView {
         } catch (InputMismatchException e) {
             System.out.println("Invalid amount format. Please enter a valid number.");
             scanner.nextLine();
-            return getAmountInput();
+            return getAmountCryptoInput();
+        }
+    }
+
+    public BigDecimal getAmountSellMaxInput(){
+        System.out.print("Enter the maximum amount of Cryptocurrency you want to sell: ");
+        try {
+            return scanner.nextBigDecimal();
+        } catch (InputMismatchException e) {
+            System.out.println("Invalid amount format. Please enter a valid number.");
+            scanner.nextLine();
+            return getAmountSellMaxInput();
+        }
+    }
+    public BigDecimal getAmountSellMinInput(){
+        System.out.print("Enter the minimum amount of Cryptocurrency you want to sell: ");
+        try {
+            return scanner.nextBigDecimal();
+        } catch (InputMismatchException e) {
+            System.out.println("Invalid amount format. Please enter a valid number.");
+            scanner.nextLine();
+            return getAmountSellMinInput();
         }
     }
 
