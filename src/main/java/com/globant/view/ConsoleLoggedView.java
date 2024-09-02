@@ -102,7 +102,16 @@ public class ConsoleLoggedView {
         }
     }
 
-
+    public BigDecimal getSellMoneyInput(){
+        System.out.print("Enter the minimum amount of money you are willing to accept: ");
+        try {
+            return scanner.nextBigDecimal();
+        } catch (InputMismatchException e) {
+            System.out.println("Invalid amount format. Please enter a valid number.");
+            scanner.nextLine();
+            return getBuyMoneyInput();
+        }
+    }
 
 
 
