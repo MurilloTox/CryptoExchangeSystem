@@ -121,7 +121,7 @@ public class User {
     }
 
 
-    private class DigitalWallet{
+    private final class DigitalWallet{
         private final int idCustomer;
         private BigDecimal money;
         private BigDecimal bitCoinOwned;
