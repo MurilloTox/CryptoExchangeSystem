@@ -1,6 +1,7 @@
 package com.globant.view;
 
 import com.globant.model.ExchangeStorage;
+import com.globant.model.Order;
 
 import java.math.BigDecimal;
 import java.util.InputMismatchException;
@@ -101,10 +102,12 @@ public class ConsoleLoggedView {
         }
     }
 
-
-
     public void showUserBalance(String s) {
         System.out.println(s);
+    }
+
+    public void showOrder(Order order){
+        System.out.println(order);
     }
 
     public void showError(String s) {

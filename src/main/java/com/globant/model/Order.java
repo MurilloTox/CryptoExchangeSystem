@@ -4,11 +4,13 @@ import java.math.BigDecimal;
 import java.util.Objects;
 
 public abstract class Order {
-    private User user;
-    private CrytoCurrency crytoCurrency;
-    private BigDecimal cryptoAmount;
+    private final User user;
+    private final CrytoCurrency crytoCurrency;
+    private final BigDecimal cryptoAmount;
     private BigDecimal price;
     private boolean active;
+    private final int orderId;
+    private static int count = 0;
 
     protected Order(User user, CrytoCurrency crytoCurrency,
                     BigDecimal cryptoAmount, BigDecimal price) {
@@ -17,6 +19,11 @@ public abstract class Order {
         this.cryptoAmount = cryptoAmount;
         this.price = price;
         this.active = true;
+        this.orderId = count++;
+    }
+
+    public int getOrderId() {
+        return orderId;
     }
 
     public User getUser() {
@@ -35,6 +42,10 @@ public abstract class Order {
         return price;
     }
 
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
     public boolean isActive() {
         return active;
     }
@@ -45,12 +56,11 @@ public abstract class Order {
 
     @Override
     public String toString() {
-        return "Order{" +
-                "user=" + user +
-                ", crytoCurrency=" + crytoCurrency +
-                ", cryptoAmount=" + cryptoAmount +
-                ", price=" + price +
-                ", active=" + active +
-                '}';
+        return "order id= " + orderId +
+                ", user= " + user.getFullName() +
+                ", cryptoCurrency= " + crytoCurrency.getName() +
+                ", cryptoAmount= " + cryptoAmount +
+                ", price= " + price +
+                ", active= " + active;
     }
 }
