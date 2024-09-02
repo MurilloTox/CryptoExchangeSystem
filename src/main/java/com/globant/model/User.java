@@ -1,11 +1,13 @@
 package com.globant.model;
 
+import com.globant.service.OrdersService;
 import com.globant.service.SystemService;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
 public class User {
@@ -29,6 +31,7 @@ public class User {
         System.out.println("User "+ id +" created");
         listUsers.add(this);
         SystemService.getInstance().addUsers(this);
+        //OrdersService.getInstance().addDebt(this, new BigDecimal("0.0"));
     }
 
     private int newID() {
@@ -106,6 +109,19 @@ public class User {
                 ", password='" + password + '\'' +
                 ", id=" + id +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return id == user.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Integer.toString(id).hashCode();
     }
 
 

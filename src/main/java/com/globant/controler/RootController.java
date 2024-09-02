@@ -1,6 +1,7 @@
 package com.globant.controler;
 
 import com.globant.model.User;
+import com.globant.service.OrdersService;
 import com.globant.service.SystemService;
 import com.globant.view.ConsoleLoggedView;
 import com.globant.view.ConsoleView;
@@ -16,13 +17,16 @@ public class RootController {
     private final ViewWalletBalanceController viewWalletBalanceController;
     private final DepositController depositController;
     private final ExchangeController exchangeController;
+    private final OrdersService ordersService;
+    private  final PlaceBuyOrderController placeBuyOrderController;
 
 
 
 
-    private RootController(ConsoleView view, SystemService systemService , ConsoleLoggedView viewLogged) {
+    private RootController(ConsoleView view, SystemService systemService , ConsoleLoggedView viewLogged, OrdersService ordersService) {
         this.view = view;
         this.systemService = systemService;
+        this.ordersService = ordersService;
         this.viewLogged = viewLogged;
 
         this.registerUserController = new RegisterUserController(view, systemService);
@@ -30,21 +34,25 @@ public class RootController {
         this.viewWalletBalanceController = ViewWalletBalanceController.getInstance(viewLogged, systemService);
         this.depositController = DepositController.getInstance(viewLogged, systemService);
         this.exchangeController = ExchangeController.getInstance(viewLogged, systemService);
+        this.placeBuyOrderController = PlaceBuyOrderController.getInstance(viewLogged, ordersService);
+
     }
 
-    public static RootController getInstance(ConsoleView view, SystemService systemService, ConsoleLoggedView viewLogged) {
+    public static RootController getInstance(ConsoleView view, SystemService systemService, ConsoleLoggedView viewLogged, OrdersService ordersService) {
         if (instance == null) {
-            instance = new RootController(ConsoleView.getInstance(), SystemService.getInstance(), ConsoleLoggedView.getInstance());
+            instance = new RootController(ConsoleView.getInstance(), SystemService.getInstance(), ConsoleLoggedView.getInstance(), OrdersService.getInstance());
         }
         return instance;
     }
 
     public static RootController getInstance(){
         if (instance == null) {
-            instance = getInstance(ConsoleView.getInstance(), SystemService.getInstance(), ConsoleLoggedView.getInstance());
+            instance = getInstance(ConsoleView.getInstance(), SystemService.getInstance(), ConsoleLoggedView.getInstance(), OrdersService.getInstance());
         }
         return instance;
     }
+
+    //Hacer que los metodos excute sean protected
 
     public void run(){
         while(true){
@@ -80,15 +88,12 @@ public class RootController {
                     exchangeController.execute();
                     break;
                 case 4:
-                    viewWalletBalanceController.execute();
+                    placeBuyOrderController.execute();
                     break;
                 case 5:
                     exchangeController.execute();
                     break;
                 case 6:
-                    viewWalletBalanceController.execute();
-                    break;
-                case 7:
                     System.exit(0);
                 default:
                     viewLogged.showError("Invalid option. Please try again.");
