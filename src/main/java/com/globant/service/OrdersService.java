@@ -11,12 +11,12 @@ public class OrdersService {
     private static OrdersService instance;
     private static List<Order> orders;
     private final  HashMap<User, BigDecimal> debts;
-    private final  HashMap<User, BigDecimal> crytoDetention;
+    private final  HashMap<User, BigDecimal> cryptoDetention;
 
     private OrdersService() {
         orders = new ArrayList<>();
         debts = new HashMap<>();
-        crytoDetention = new HashMap<>();
+        cryptoDetention = new HashMap<>();
     }
 
     public static OrdersService getInstance() {
@@ -39,10 +39,10 @@ public class OrdersService {
     }
 
     public void addCrytoDetention(User user, BigDecimal amount) {
-        if (!crytoDetention.containsKey(user)) {
-            crytoDetention.put(user, amount);
+        if (!cryptoDetention.containsKey(user)) {
+            cryptoDetention.put(user, amount);
         } else {
-            crytoDetention.put(user, crytoDetention.get(user).add(amount));
+            cryptoDetention.put(user, cryptoDetention.get(user).add(amount));
         }
     }
 
@@ -51,7 +51,7 @@ public class OrdersService {
     }
 
     public void substractCrytoDetention(User user, BigDecimal amount) {
-        crytoDetention.put(user, crytoDetention.get(user).subtract(amount));
+        cryptoDetention.put(user, cryptoDetention.get(user).subtract(amount));
     }
 
     public BuyOrder publishBuyOrder(User buyer, CrytoCurrency currency,
@@ -71,17 +71,9 @@ public class OrdersService {
     private boolean ableTo(HashMap<User, BigDecimal> map, BigDecimal amount, User user) {
         try {
             BigDecimal possibleDebt = map.get(user).add(amount);
-            if (possibleDebt.compareTo(BigDecimal.ZERO) >= 0) {
-                return true;
-            } else {
-                return false;
-            }
+            return possibleDebt.compareTo(BigDecimal.ZERO) >= 0;
         } catch (NullPointerException e) {
-            if (user.getCurrentMoney().compareTo(amount) >= 0) {
-                return true;
-            } else {
-                return false;
-            }
+            return user.getCurrentMoney().compareTo(amount) >= 0;
         }
     }
 
@@ -90,7 +82,7 @@ public class OrdersService {
     }
 
     public boolean ableToSell(BigDecimal amount, User user) {
-        return ableTo(crytoDetention, amount, user);
+        return ableTo(cryptoDetention, amount, user);
     }
 
     public void checkOrders(Order newOrder) {
@@ -132,6 +124,7 @@ public class OrdersService {
     public void processOrders(BuyOrder buyOrder, SellOrder sellOrder) {
         User buyer = buyOrder.getUser();
         User seller = sellOrder.getUser();
+        buyOrder.setPrice(sellOrder.getPrice());
         BigDecimal money = sellOrder.getPrice();
         BigDecimal cryptoAmount = sellOrder.getCryptoAmount();
         buyer.setCurrentMoney(buyer.getCurrentMoney().subtract(money));
@@ -145,5 +138,15 @@ public class OrdersService {
         }
         buyOrder.setActive(false);
         sellOrder.setActive(false);
+    }
+
+    public List<Order> obtainUserHistory(User user){
+        List<Order> userOrders = new ArrayList<>();
+        for (Order order : orders) {
+            if (order.getUser().equals(user)) {
+                userOrders.add(order);
+            }
+        }
+        return userOrders;
     }
 }

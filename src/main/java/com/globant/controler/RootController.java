@@ -20,6 +20,7 @@ public class RootController {
     private final OrdersService ordersService;
     private final PlaceBuyOrderController placeBuyOrderController;
     private final PlaceSellOrderController placeSellOrderController;
+    private final ViewTransactionHistory viewTransactionHistory;
 
 
 
@@ -37,6 +38,7 @@ public class RootController {
         this.exchangeController = ExchangeController.getInstance(viewLogged, systemService);
         this.placeBuyOrderController = PlaceBuyOrderController.getInstance(viewLogged, ordersService);
         this.placeSellOrderController = PlaceSellOrderController.getInstance(viewLogged, ordersService);
+        this.viewTransactionHistory = ViewTransactionHistory.getInstance(viewLogged, ordersService);
     }
 
     public static RootController getInstance(ConsoleView view, SystemService systemService, ConsoleLoggedView viewLogged, OrdersService ordersService) {
@@ -99,7 +101,8 @@ public class RootController {
                     placeSellOrderController.execute();
                     break;
                 case 6:
-                    //System.exit(0);
+                    viewTransactionHistory.execute();
+                    break;
                 case 7:
                     view.showSuccessMessage("You have logged out.");
                     setCurrentUser(null);
