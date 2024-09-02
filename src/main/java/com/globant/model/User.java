@@ -166,8 +166,8 @@ public class User {
         public String toString() {
             return "The balance of your digitalWallet of " +
                     "customer with id " + idCustomer +
-                    " is , fiat money= " + money +
-                    "$, bitCoinOwned= " + bitCoinOwned +
+                    " is , fiat money= $" + money +
+                    ", bitCoinOwned= " + bitCoinOwned +
                     " BTC, ethereumOwned= " + ethereumOwned + " ETR";
         }
     }

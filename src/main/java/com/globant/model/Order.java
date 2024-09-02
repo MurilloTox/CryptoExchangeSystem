@@ -55,7 +55,7 @@ public abstract class Order {
                 ", user= " + user.getFullName() +
                 ", cryptoCurrency= " + crytoCurrency.getName() +
                 ", cryptoAmount= " + cryptoAmount +
-                ", price= " + price +
+                ", price= $" + price +
                 ", active= " + active;
     }
 }
