@@ -36,18 +36,6 @@ public class ConsoleLoggedView {
             return INVALID_CHOICE;
         }
     }
-    public int getUserGoBack() {
-        System.out.println("Choose one option to continue:");
-        System.out.println("1. Try again.");
-        System.out.println("2. Go back.");
-        System.out.print("Enter your choice: ");
-        try {
-            return scanner.nextInt();
-        } catch (InputMismatchException e) {
-            scanner.nextLine();
-            return INVALID_CHOICE;
-        }
-    }
 
     public BigDecimal getAmountInput() {
         System.out.print("Enter the amount: ");
@@ -81,7 +69,7 @@ public class ConsoleLoggedView {
     }
 
     public BigDecimal getAmountCryptoInput(){
-        System.out.print("Enter the amount of Cryptocurrency you want to buy: ");
+        System.out.print("Enter the amount of Cryptocurrency you want: ");
         try {
             return scanner.nextBigDecimal();
         } catch (InputMismatchException e) {

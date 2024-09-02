@@ -41,7 +41,7 @@ public class RootController {
 
     public static RootController getInstance(ConsoleView view, SystemService systemService, ConsoleLoggedView viewLogged, OrdersService ordersService) {
         if (instance == null) {
-            instance = new RootController(ConsoleView.getInstance(), SystemService.getInstance(), ConsoleLoggedView.getInstance(), OrdersService.getInstance());
+            instance = new RootController(view, systemService, viewLogged, ordersService);
         }
         return instance;
     }

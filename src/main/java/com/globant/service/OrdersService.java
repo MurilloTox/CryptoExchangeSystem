@@ -14,7 +14,7 @@ public class OrdersService {
     private final  HashMap<User, BigDecimal> crytoDetention;
 
     private OrdersService() {
-        orders = new ArrayList<Order>();
+        orders = new ArrayList<>();
         debts = new HashMap<>();
         crytoDetention = new HashMap<>();
     }
