@@ -1,7 +1,7 @@
 package com.globant.controler;
 
 import com.globant.model.*;
-import com.globant.service.InsufficientFundsException;
+import com.globant.service.Exception.InsufficientFundsException;
 import com.globant.service.OrdersService;
 import com.globant.view.ConsoleLoggedView;
 
@@ -26,7 +26,7 @@ public class PlaceSellOrderController {
 
     protected void execute() {
         int choice = view.getCryptoOption();
-        User user = RootController.getInstance().getCurrentUser();
+        User user = RootLoggedController.getInstance().getCurrentUser();
         switch (choice) {
             case 1:
                 Bitcoin btc = Bitcoin.getInstance();
@@ -57,13 +57,13 @@ public class PlaceSellOrderController {
     }
     private void sellController (User user, CrytoCurrency currency, BigDecimal cryptoAmount,
                                  BigDecimal minMoney) throws InsufficientFundsException {
-        if (service.ableToSell(minMoney, user)){
+        if (service.ableToSell(minMoney, user, currency)){
             SellOrder order = service.publishSellOrder(user, currency, cryptoAmount, minMoney);
-            service.addCrytoDetention(user, minMoney);
+            service.addCryptoDetention(user, minMoney);
             ConsoleLoggedView.getInstance().showSuccessMessage("Your order was placed");
             service.checkOrders(order);
         } else {
-            throw new InsufficientFundsException("Insufficient funds to buy.");
+            throw new InsufficientFundsException("Insufficient funds to sell.");
         }
     }
 }

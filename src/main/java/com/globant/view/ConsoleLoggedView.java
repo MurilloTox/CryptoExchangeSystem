@@ -11,6 +11,10 @@ public class ConsoleLoggedView {
     private final Scanner scanner = new Scanner(System.in);
     private static final int INVALID_CHOICE = -1;
     private static ConsoleLoggedView instance;
+    private static final String ANSI_RED = "\u001B[31m";
+    private static final String ANSI_GREEN = "\u001B[32m";
+    private static final String ANSI_BLUE = "\u001B[34m";
+    private static final String ANSI_RESET = "\u001B[0m";
 
     private ConsoleLoggedView(){}
 
@@ -21,6 +25,7 @@ public class ConsoleLoggedView {
         return instance;
     }
     public int getUserLoggedChoice() {
+        separation();
         System.out.println("Choose one option to continue:");
         System.out.println("1. Deposit money");
         System.out.println("2. View wallet balance");
@@ -29,6 +34,7 @@ public class ConsoleLoggedView {
         System.out.println("5. Place Sell Order");
         System.out.println("6. View Transaction History");
         System.out.println("7. Logout");
+        separation();
         System.out.print("Enter your choice: ");
         try {
             return scanner.nextInt();
@@ -54,12 +60,14 @@ public class ConsoleLoggedView {
     }
 
     public int getCryptoOption(){
+        separation();
         System.out.println("Current storage: " + ExchangeStorage.getInstance().toString());
         currentPrice();
         System.out.println("Choose one option to continue:");
         System.out.println("1. Bitcoin");
         System.out.println("2. Ethereum");
         System.out.println("3. Go back");
+        separation();
         System.out.print("Enter your choice: ");
         try {
             return scanner.nextInt();
@@ -102,8 +110,16 @@ public class ConsoleLoggedView {
         }
     }
 
+    public void separation(){
+        System.out.println(ANSI_BLUE + "---------------------------------------" + ANSI_RESET);
+    }
+
     public void showUserBalance(String s) {
         System.out.println(s);
+    }
+
+    public void showSystemMessage(String s) {
+        System.out.println(ANSI_BLUE + s + ANSI_RESET);
     }
 
     public void showOrder(Order order){
@@ -111,11 +127,11 @@ public class ConsoleLoggedView {
     }
 
     public void showError(String s) {
-        System.out.println(s);
+        System.out.println(ANSI_RED + s + ANSI_RESET);
     }
 
     public void showSuccessMessage(String s) {
-        System.out.println(s);
+        System.out.println(ANSI_GREEN + s + ANSI_RESET);
     }
 
 }

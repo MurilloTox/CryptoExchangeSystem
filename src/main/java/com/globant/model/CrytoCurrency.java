@@ -32,6 +32,10 @@ public abstract class CrytoCurrency {
         return currentPrice;
     }
 
+    public void setCurrentPrice(BigDecimal currentPrice) {
+        this.currentPrice = currentPrice;
+    }
+
     public BigDecimal getInitialAmount() {
         return inicialAmount;
     }

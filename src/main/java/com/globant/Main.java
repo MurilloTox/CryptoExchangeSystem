@@ -28,7 +28,7 @@ public class Main {
         ordersService.addOrder(buyOrder1);
         ordersService.addOrder(buyOrder2);
         ConsoleLoggedView consoleLoggedView = ConsoleLoggedView.getInstance();
-        RootController rootController = RootController.getInstance(consoleView, systemService, consoleLoggedView, ordersService);
+        RootController rootController = RootController.getInstance(consoleView, systemService);
         rootController.run();
 
     }

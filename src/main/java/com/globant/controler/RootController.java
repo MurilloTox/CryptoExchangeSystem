@@ -1,56 +1,54 @@
 package com.globant.controler;
 
-import com.globant.model.User;
-import com.globant.service.OrdersService;
 import com.globant.service.SystemService;
-import com.globant.view.ConsoleLoggedView;
 import com.globant.view.ConsoleView;
 
 public class RootController {
     private static RootController instance;
     private final ConsoleView view;
-    private User currentUser;
-    private final ConsoleLoggedView viewLogged;
+    //private User currentUser;
+    //private final ConsoleLoggedView viewLogged;
     private final SystemService systemService;
     private final RegisterUserController registerUserController;
     private final LoginUserController loginUserController;
-    private final ViewWalletBalanceController viewWalletBalanceController;
+    /*private final ViewWalletBalanceController viewWalletBalanceController;
     private final DepositController depositController;
     private final ExchangeController exchangeController;
     private final OrdersService ordersService;
     private final PlaceBuyOrderController placeBuyOrderController;
     private final PlaceSellOrderController placeSellOrderController;
-    private final ViewTransactionHistory viewTransactionHistory;
+    private final ViewTransactionHistory viewTransactionHistory;*/
 
 
 
 
-    private RootController(ConsoleView view, SystemService systemService , ConsoleLoggedView viewLogged, OrdersService ordersService) {
+    private RootController(ConsoleView view, SystemService systemService) {
         this.view = view;
         this.systemService = systemService;
-        this.ordersService = ordersService;
-        this.viewLogged = viewLogged;
+        //this.ordersService = ordersService;
+        //this.viewLogged = viewLogged;
 
-        this.registerUserController = new RegisterUserController(view, systemService);
-        this.loginUserController = new LoginUserController(view);
-        this.viewWalletBalanceController = ViewWalletBalanceController.getInstance(viewLogged, systemService);
+        this.registerUserController = RegisterUserController.getInstance(view, systemService);
+        this.loginUserController = LoginUserController.getInstance(view);
+        /*this.viewWalletBalanceController = ViewWalletBalanceController.getInstance(viewLogged, systemService);
         this.depositController = DepositController.getInstance(viewLogged, systemService);
         this.exchangeController = ExchangeController.getInstance(viewLogged, systemService);
         this.placeBuyOrderController = PlaceBuyOrderController.getInstance(viewLogged, ordersService);
         this.placeSellOrderController = PlaceSellOrderController.getInstance(viewLogged, ordersService);
         this.viewTransactionHistory = ViewTransactionHistory.getInstance(viewLogged, ordersService);
+         */
     }
 
-    public static RootController getInstance(ConsoleView view, SystemService systemService, ConsoleLoggedView viewLogged, OrdersService ordersService) {
+    public static RootController getInstance(ConsoleView view, SystemService systemService) {
         if (instance == null) {
-            instance = new RootController(view, systemService, viewLogged, ordersService);
+            instance = new RootController(view, systemService);
         }
         return instance;
     }
 
     public static RootController getInstance(){
         if (instance == null) {
-            instance = getInstance(ConsoleView.getInstance(), SystemService.getInstance(), ConsoleLoggedView.getInstance(), OrdersService.getInstance());
+            instance = getInstance(ConsoleView.getInstance(), SystemService.getInstance());
         }
         return instance;
     }
@@ -70,7 +68,7 @@ public class RootController {
                     if(notlogged){
                         run();
                     } else {
-                        runLogged();
+                        RootLoggedController.getInstance().runLogged();
                     }
                     break;
                 case 3:
@@ -81,7 +79,7 @@ public class RootController {
         }
     }
 
-    public void runLogged() {
+    /*public void runLogged() {
         while (true) {
             int choice = viewLogged.getUserLoggedChoice();
             switch (choice) {
@@ -120,6 +118,6 @@ public class RootController {
 
     protected void setCurrentUser(User user) {
         this.currentUser = user;
-    }
+    }*/
 
 }

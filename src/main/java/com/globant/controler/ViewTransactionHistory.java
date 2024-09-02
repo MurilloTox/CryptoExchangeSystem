@@ -23,7 +23,7 @@ public class ViewTransactionHistory {
     }
 
     protected void execute() {
-        User user = RootController.getInstance().getCurrentUser();
+        User user = RootLoggedController.getInstance().getCurrentUser();
         view.showSuccessMessage("Your orders history: ");
         for (Order order:service.obtainUserHistory(user)){
             view.showOrder(order);

@@ -1,8 +1,10 @@
 package com.globant.model;
 
+import com.globant.model.Interfaces.Fluctuable;
+
 import java.math.BigDecimal;
 
-public class Ethereum extends CrytoCurrency implements Fluctuable{
+public class Ethereum extends CrytoCurrency implements Fluctuable {
     private static Ethereum instance;
 
     private Ethereum() {

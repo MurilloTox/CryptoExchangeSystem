@@ -146,11 +146,11 @@ public class User {
             bitCoinOwned=amount;
         }
 
-        public BigDecimal getEthereumOwned() {
+        private BigDecimal getEthereumOwned() {
             return ethereumOwned;
         }
 
-        public void setEthereumOwned(BigDecimal amount) {
+        private void setEthereumOwned(BigDecimal amount) {
             ethereumOwned=amount;
         }
 
@@ -166,7 +166,7 @@ public class User {
         public String toString() {
             return "The balance of your digitalWallet of " +
                     "customer with id " + idCustomer +
-                    " is , fiat money= $" + money +
+                    " is: fiat money= $" + money +
                     ", bitCoinOwned= " + bitCoinOwned +
                     " BTC, ethereumOwned= " + ethereumOwned + " ETR";
         }

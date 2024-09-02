@@ -1,6 +1,7 @@
 package com.globant.service;
 
 import com.globant.controler.RootController;
+import com.globant.controler.RootLoggedController;
 import com.globant.model.*;
 
 import java.math.BigDecimal;
@@ -39,7 +40,7 @@ public class SystemService {
     }
 
     public String currentUserBalance() {
-        return RootController.getInstance().getCurrentUser().getWalletBalance();
+        return RootLoggedController.getInstance().getCurrentUser().getWalletBalance();
     }
 
     public void storageBitcoinManegement(BigDecimal amount) {

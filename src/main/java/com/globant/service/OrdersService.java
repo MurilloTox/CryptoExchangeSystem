@@ -38,7 +38,7 @@ public class OrdersService {
         }
     }
 
-    public void addCrytoDetention(User user, BigDecimal amount) {
+    public void addCryptoDetention(User user, BigDecimal amount) {
         if (!cryptoDetention.containsKey(user)) {
             cryptoDetention.put(user, amount);
         } else {
@@ -46,11 +46,11 @@ public class OrdersService {
         }
     }
 
-    public void substractDebt(User user, BigDecimal amount) {
+    public void subtractDebt(User user, BigDecimal amount) {
         debts.put(user, debts.get(user).subtract(amount));
     }
 
-    public void substractCrytoDetention(User user, BigDecimal amount) {
+    public void subtractCryptoDetention(User user, BigDecimal amount) {
         cryptoDetention.put(user, cryptoDetention.get(user).subtract(amount));
     }
 
@@ -77,12 +77,25 @@ public class OrdersService {
         }
     }
 
+    private boolean ableTo(HashMap<User, BigDecimal> map, BigDecimal amount, User user, CrytoCurrency currency) {
+        try {
+            BigDecimal possibleDebt = map.get(user).add(amount);
+            return possibleDebt.compareTo(BigDecimal.ZERO) >= 0;
+        } catch (NullPointerException e) {
+            if (currency instanceof Bitcoin) {
+                return user.consultCurrentBitcoin().compareTo(amount) >= 0;
+            } else {
+                return user.consultCurrentEthereum().compareTo(amount) >= 0;
+            }
+        }
+    }
+
     public boolean ableToBuy(BigDecimal amount, User user) {
         return ableTo(debts, amount, user);
     }
 
-    public boolean ableToSell(BigDecimal amount, User user) {
-        return ableTo(cryptoDetention, amount, user);
+    public boolean ableToSell(BigDecimal amount, User user, CrytoCurrency currency) {
+        return ableTo(cryptoDetention, amount, user, currency);
     }
 
     public void checkOrders(Order newOrder) {
@@ -97,7 +110,7 @@ public class OrdersService {
                         BuyOrder order2 = (BuyOrder) newOrder;
                         processOrders(order2, order1);
                         User user = newOrder.getUser();
-                        substractDebt(user,newOrder.getPrice());
+                        subtractDebt(user,newOrder.getPrice());
                         break;
                     }
                 }
@@ -113,7 +126,7 @@ public class OrdersService {
                         BuyOrder order2 = (BuyOrder) order;
                         processOrders(order2, order1);
                         User user = newOrder.getUser();
-                        substractCrytoDetention(user,newOrder.getPrice());
+                        subtractCryptoDetention(user,newOrder.getPrice());
                         break;
                     }
                 }
@@ -132,9 +145,15 @@ public class OrdersService {
         if (sellOrder.getCrytoCurrency() instanceof Bitcoin){
             buyer.changeBitcoin(buyer.consultCurrentBitcoin().add(cryptoAmount));
             seller.changeBitcoin(seller.consultCurrentBitcoin().subtract(cryptoAmount));
+            BigDecimal currentPrice = Bitcoin.getInstance().getCurrentPrice();
+            BigDecimal newPrice = Bitcoin.getInstance().generateNewValue(currentPrice);
+            Bitcoin.getInstance().setCurrentPrice(newPrice);
         } else if (sellOrder.getCrytoCurrency() instanceof Ethereum) {
             buyer.changeEthereum(buyer.consultCurrentEthereum().add(cryptoAmount));
             seller.changeEthereum(seller.consultCurrentEthereum().subtract(cryptoAmount));
+            BigDecimal currentPrice = Ethereum.getInstance().getCurrentPrice();
+            BigDecimal newPrice = Ethereum.getInstance().generateNewValue(currentPrice);
+            Ethereum.getInstance().setCurrentPrice(newPrice);
         }
         buyOrder.setActive(false);
         sellOrder.setActive(false);

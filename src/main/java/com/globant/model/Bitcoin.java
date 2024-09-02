@@ -1,5 +1,7 @@
 package com.globant.model;
 
+import com.globant.model.Interfaces.Fluctuable;
+
 import java.math.BigDecimal;
 
 public class Bitcoin extends CrytoCurrency implements Fluctuable {

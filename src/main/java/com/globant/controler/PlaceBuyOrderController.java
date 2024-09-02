@@ -1,7 +1,7 @@
 package com.globant.controler;
 
 import com.globant.model.*;
-import com.globant.service.InsufficientFundsException;
+import com.globant.service.Exception.InsufficientFundsException;
 import com.globant.service.OrdersService;
 import com.globant.view.ConsoleLoggedView;
 
@@ -26,7 +26,7 @@ public class PlaceBuyOrderController {
 
     protected void execute() {
         int choice = view.getCryptoOption();
-        User user = RootController.getInstance().getCurrentUser();
+        User user = RootLoggedController.getInstance().getCurrentUser();
         switch (choice) {
             case 1:
                 Bitcoin btc = Bitcoin.getInstance();
