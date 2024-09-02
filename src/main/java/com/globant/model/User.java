@@ -1,23 +1,21 @@
 package com.globant.model;
 
-import com.globant.service.OrdersService;
 import com.globant.service.SystemService;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Random;
 
 public class User {
-    private String name;
-    private String lastName;
-    private String email;
-    private String password;
-    private static List<User> listUsers=new ArrayList<>();
-    private int id;
-    private DigitalWallet digitalWallet;
+    private final String name;
+    private final String lastName;
+    private final String email;
+    private final String password;
+    private final static List<User> listUsers=new ArrayList<>();
+    private final int id;
+    private final DigitalWallet digitalWallet;
 
 
     public User(String name, String lastName, String email, String password) {
@@ -26,8 +24,7 @@ public class User {
         this.email = email;
         this.password = password;
         this.id = newID();
-        DigitalWallet digitalWallet = new DigitalWallet(id);
-        this.digitalWallet = digitalWallet;
+        digitalWallet = new DigitalWallet(id);
         System.out.println("User "+ id +" created");
         listUsers.add(this);
         SystemService.getInstance().addUsers(this);
@@ -125,7 +122,7 @@ public class User {
 
 
     private class DigitalWallet{
-        private int idCustomer;
+        private final int idCustomer;
         private BigDecimal money;
         private BigDecimal bitCoinOwned;
         private BigDecimal ethereumOwned;

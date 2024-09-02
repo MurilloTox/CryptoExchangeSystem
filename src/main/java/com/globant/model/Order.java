@@ -1,7 +1,6 @@
 package com.globant.model;
 
 import java.math.BigDecimal;
-import java.util.Objects;
 
 public abstract class Order {
     private final User user;
@@ -20,10 +19,6 @@ public abstract class Order {
         this.price = price;
         this.active = true;
         this.orderId = count++;
-    }
-
-    public int getOrderId() {
-        return orderId;
     }
 
     public User getUser() {
