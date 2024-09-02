@@ -18,7 +18,8 @@ public class RootController {
     private final DepositController depositController;
     private final ExchangeController exchangeController;
     private final OrdersService ordersService;
-    private  final PlaceBuyOrderController placeBuyOrderController;
+    private final PlaceBuyOrderController placeBuyOrderController;
+    private final PlaceSellOrderController placeSellOrderController;
 
 
 
@@ -35,12 +36,12 @@ public class RootController {
         this.depositController = DepositController.getInstance(viewLogged, systemService);
         this.exchangeController = ExchangeController.getInstance(viewLogged, systemService);
         this.placeBuyOrderController = PlaceBuyOrderController.getInstance(viewLogged, ordersService);
-
+        this.placeSellOrderController = PlaceSellOrderController.getInstance(viewLogged, ordersService);
     }
 
     public static RootController getInstance(ConsoleView view, SystemService systemService, ConsoleLoggedView viewLogged, OrdersService ordersService) {
         if (instance == null) {
-            instance = new RootController(ConsoleView.getInstance(), SystemService.getInstance(), ConsoleLoggedView.getInstance(), OrdersService.getInstance());
+            instance = new RootController(view, systemService, viewLogged, ordersService);
         }
         return instance;
     }
@@ -91,7 +92,7 @@ public class RootController {
                     placeBuyOrderController.execute();
                     break;
                 case 5:
-                    exchangeController.execute();
+                    placeSellOrderController.execute();
                     break;
                 case 6:
                     System.exit(0);

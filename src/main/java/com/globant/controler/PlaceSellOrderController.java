@@ -7,19 +7,19 @@ import com.globant.view.ConsoleLoggedView;
 
 import java.math.BigDecimal;
 
-public class PlaceBuyOrderController {
-    private static PlaceBuyOrderController instance;
+public class PlaceSellOrderController {
+    private static PlaceSellOrderController instance;
     private final ConsoleLoggedView view;
     private final OrdersService service;
 
-    private PlaceBuyOrderController(ConsoleLoggedView view, OrdersService ordersService) {
+    private PlaceSellOrderController(ConsoleLoggedView view, OrdersService service) {
         this.view = view;
-        this.service = ordersService;
+        this.service = service;
     }
 
-    public static PlaceBuyOrderController getInstance(ConsoleLoggedView view, OrdersService ordersService) {
+    public static PlaceSellOrderController getInstance(ConsoleLoggedView view, OrdersService service) {
         if (instance == null) {
-            instance = new PlaceBuyOrderController(view, ordersService);
+            instance = new PlaceSellOrderController(view, service);
         }
         return instance;
     }
@@ -31,9 +31,9 @@ public class PlaceBuyOrderController {
             case 1:
                 Bitcoin btc = Bitcoin.getInstance();
                 BigDecimal cryptoAmountB = view.getAmountCryptoInput();
-                BigDecimal maxMoneyB = view.getBuyMoneyInput();
+                BigDecimal minMoneyB = view.getSellMoneyInput();
                 try {
-                    buyController(user, btc, cryptoAmountB, maxMoneyB);
+                    sellController(user, btc, cryptoAmountB, minMoneyB);
                     break;
                 } catch (InsufficientFundsException e) {
                     System.out.println(e.getMessage());
@@ -44,7 +44,7 @@ public class PlaceBuyOrderController {
                 BigDecimal cryptoAmountE = view.getAmountCryptoInput();
                 BigDecimal maxMoneyE = view.getBuyMoneyInput();
                 try {
-                    buyController(user, etm, cryptoAmountE, maxMoneyE);
+                    sellController(user, etm, cryptoAmountE, maxMoneyE);
                     break;
                 } catch (InsufficientFundsException e) {
                     System.out.println(e.getMessage());
@@ -55,12 +55,11 @@ public class PlaceBuyOrderController {
         }
 
     }
-
-    private void buyController (User user, CrytoCurrency currency, BigDecimal cryptoAmount,
-                                BigDecimal maxMoney) throws InsufficientFundsException {
-        if (service.ableToBuy(maxMoney, user)){
-            BuyOrder order = service.publishBuyOrder(user, currency, cryptoAmount, maxMoney);
-            service.addDebt(user, maxMoney);
+    private void sellController (User user, CrytoCurrency currency, BigDecimal cryptoAmount,
+                                 BigDecimal minMoney) throws InsufficientFundsException {
+        if (service.ableToSell(minMoney, user)){
+            SellOrder order = service.publishSellOrder(user, currency, cryptoAmount, minMoney);
+            service.addCrytoDetention(user, minMoney);
             ConsoleLoggedView.getInstance().showSuccessMessage("Your order was placed");
             service.checkOrders(order);
         } else {
@@ -68,3 +67,4 @@ public class PlaceBuyOrderController {
         }
     }
 }
+
