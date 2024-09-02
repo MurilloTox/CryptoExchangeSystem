@@ -9,7 +9,7 @@ import java.util.HashMap;
 
 public class SystemService {
     private static SystemService instance;
-    private HashMap<String, User> users;
+    private final HashMap<String, User> users;
 
     private SystemService() {
         this.users = new HashMap<>();

@@ -1,6 +1,7 @@
 package com.globant.model;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 public abstract class CrytoCurrency {
     private final String name;
@@ -33,6 +34,19 @@ public abstract class CrytoCurrency {
 
     public BigDecimal getInitialAmount() {
         return inicialAmount;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CrytoCurrency that = (CrytoCurrency) o;
+        return Objects.equals(getName(), that.getName()) && Objects.equals(getIdentifier(), that.getIdentifier());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getName(), getIdentifier());
     }
 
     @Override

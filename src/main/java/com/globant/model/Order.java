@@ -1,6 +1,7 @@
 package com.globant.model;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 public abstract class Order {
     private User user;
@@ -42,4 +43,14 @@ public abstract class Order {
         this.active = active;
     }
 
+    @Override
+    public String toString() {
+        return "Order{" +
+                "user=" + user +
+                ", crytoCurrency=" + crytoCurrency +
+                ", cryptoAmount=" + cryptoAmount +
+                ", price=" + price +
+                ", active=" + active +
+                '}';
+    }
 }

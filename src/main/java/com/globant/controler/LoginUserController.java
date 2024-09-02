@@ -37,7 +37,7 @@ public class LoginUserController {
                             execute();
                             break;
                         case 2:
-                            RootController.getInstance(ConsoleView.getInstance(), SystemService.getInstance(), ConsoleLoggedView.getInstance()).run();
+                            RootController.getInstance().run();
                             break;
                     }
                 }

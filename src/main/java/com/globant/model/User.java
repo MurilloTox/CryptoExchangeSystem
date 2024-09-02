@@ -1,5 +1,6 @@
 package com.globant.model;
 
+import com.globant.service.OrdersService;
 import com.globant.service.SystemService;
 
 import java.math.BigDecimal;
@@ -30,6 +31,7 @@ public class User {
         System.out.println("User "+ id +" created");
         listUsers.add(this);
         SystemService.getInstance().addUsers(this);
+        //OrdersService.getInstance().addDebt(this, new BigDecimal("0.0"));
     }
 
     private int newID() {

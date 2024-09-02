@@ -43,8 +43,7 @@ public class ExchangeStorage {
 
     @Override
     public String toString() {
-        return "ExchangeStorage{" +
-                "bitcoin=" + getBitcoinAvailable() +
+        return "bitcoin=" + getBitcoinAvailable() +
                 ", ethereum=" + getEthereumAvailable() +
                 '}';
     }
