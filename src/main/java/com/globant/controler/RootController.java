@@ -64,8 +64,12 @@ public class RootController {
                     registerUserController.execute();
                     break;
                 case 2:
-                    loginUserController.execute();
-                    runLogged();
+                    boolean notlogged = loginUserController.execute();
+                    if(notlogged){
+                        run();
+                    } else {
+                        runLogged();
+                    }
                     break;
                 case 3:
                     System.exit(0);
@@ -95,7 +99,12 @@ public class RootController {
                     placeSellOrderController.execute();
                     break;
                 case 6:
-                    System.exit(0);
+                    //System.exit(0);
+                case 7:
+                    view.showSuccessMessage("You have logged out.");
+                    setCurrentUser(null);
+                    run();
+                    break;
                 default:
                     viewLogged.showError("Invalid option. Please try again.");
             }
