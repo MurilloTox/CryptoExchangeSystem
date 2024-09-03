@@ -9,8 +9,8 @@ public class RootLoggedController {
     private static RootLoggedController instance;
     private final ConsoleLoggedView viewLogged;
     private User currentUser;
-    private SystemService systemService;
-    private OrdersService ordersService;
+    private final SystemService systemService;
+    private final OrdersService ordersService;
     private final ViewWalletBalanceController viewWalletBalanceController;
     private final DepositController depositController;
     private final ExchangeController exchangeController;

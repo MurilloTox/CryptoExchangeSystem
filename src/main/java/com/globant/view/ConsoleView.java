@@ -1,6 +1,5 @@
 package com.globant.view;
 
-import java.math.BigDecimal;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
