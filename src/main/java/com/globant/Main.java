@@ -1,7 +1,6 @@
 package com.globant;
 
 import com.globant.controler.RootController;
-import com.globant.service.SystemService;
 import com.globant.view.ConsoleView;
 
 public class Main {

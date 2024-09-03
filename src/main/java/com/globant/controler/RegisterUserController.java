@@ -1,7 +1,6 @@
 package com.globant.controler;
 
 import com.globant.model.User;
-import com.globant.service.SystemService;
 import com.globant.view.ConsoleView;
 
 public class RegisterUserController {
