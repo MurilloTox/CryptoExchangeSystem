@@ -5,4 +5,4 @@
 when switching users without ending the program's execution, any transactions that have been made will persist.
 
 
-Note: Every time a transaction is successfully completed, the value of the cryptocurrency in question changes.
+Notes: Every time a transaction is successfully completed the value of the cryptocurrency in question changes, and the design patterns used were the structural design pattern MVC and the creational design pattern Singleton.
