@@ -42,9 +42,9 @@ public class PlaceSellOrderController {
             case 2:
                 Ethereum etm = Ethereum.getInstance();
                 BigDecimal cryptoAmountE = view.getAmountCryptoInput();
-                BigDecimal maxMoneyE = view.getBuyMoneyInput();
+                BigDecimal minMoneyE = view.getBuyMoneyInput();
                 try {
-                    sellController(user, etm, cryptoAmountE, maxMoneyE);
+                    sellController(user, etm, cryptoAmountE, minMoneyE);
                     break;
                 } catch (InsufficientFundsException e) {
                     System.out.println(e.getMessage());
@@ -52,14 +52,21 @@ public class PlaceSellOrderController {
                 }
             case 3:
                 break;
+
+            default:
+                view.showError("That option doesn't exist, please try again.");
         }
 
     }
-    private void sellController (User user, CrytoCurrency currency, BigDecimal cryptoAmount,
+    private void sellController(User user, CrytoCurrency currency, BigDecimal cryptoAmount,
                                  BigDecimal minMoney) throws InsufficientFundsException {
         if (service.ableToSell(minMoney, user, currency)){
             SellOrder order = service.publishSellOrder(user, currency, cryptoAmount, minMoney);
-            service.addCryptoDetention(user, minMoney);
+            if (currency instanceof Bitcoin) {
+                service.addBTCDetention(user, minMoney);
+            } else {
+                service.addETMDetention(user, minMoney);
+            }
             ConsoleLoggedView.getInstance().showSuccessMessage("Your order was placed");
             service.checkOrders(order);
         } else {

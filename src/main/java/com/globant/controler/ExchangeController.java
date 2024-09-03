@@ -32,11 +32,10 @@ public class ExchangeController {
        BigDecimal amount = new BigDecimal("0.0");
        User user = RootLoggedController.getInstance().getCurrentUser();
        BigDecimal userMoney = user.getCurrentMoney();
-       BigDecimal amountTried = new BigDecimal("0.0");
-       BigDecimal currentPrice = new BigDecimal("0.0");
+       BigDecimal amountTried;
+       BigDecimal currentPrice;
        try {
            switch (choice) {
-               //Agregar un controlador para cuando el amountTried es menor a $0.01
                case 1:
                    amount = amount.add(view.getAmountCryptoInput());
                    currentPrice = Bitcoin.getInstance().getCurrentPrice();
@@ -75,6 +74,9 @@ public class ExchangeController {
 
                case 3:
                    break;
+
+               default:
+                   view.showError("That option doesn't exist, please try again.");
            }
        } catch (InsufficientFundsException e) {
            System.out.println(e.getMessage());

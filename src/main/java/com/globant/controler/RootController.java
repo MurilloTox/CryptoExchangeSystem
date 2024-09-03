@@ -6,32 +6,28 @@ import com.globant.view.ConsoleView;
 public class RootController {
     private static RootController instance;
     private final ConsoleView view;
-    private final SystemService systemService;
     private final RegisterUserController registerUserController;
     private final LoginUserController loginUserController;
 
-    private RootController(ConsoleView view, SystemService systemService) {
+    private RootController(ConsoleView view) {
         this.view = view;
-        this.systemService = systemService;
-        this.registerUserController = RegisterUserController.getInstance(view, systemService);
+        this.registerUserController = RegisterUserController.getInstance(view);
         this.loginUserController = LoginUserController.getInstance(view);
     }
 
-    public static RootController getInstance(ConsoleView view, SystemService systemService) {
+    public static RootController getInstance(ConsoleView view) {
         if (instance == null) {
-            instance = new RootController(view, systemService);
+            instance = new RootController(view);
         }
         return instance;
     }
 
     public static RootController getInstance(){
         if (instance == null) {
-            instance = getInstance(ConsoleView.getInstance(), SystemService.getInstance());
+            instance = getInstance(ConsoleView.getInstance());
         }
         return instance;
     }
-
-    //Hacer que los metodos excute sean protected
 
     public void run(){
         while(true){

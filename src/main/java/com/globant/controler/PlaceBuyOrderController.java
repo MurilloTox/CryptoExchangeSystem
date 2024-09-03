@@ -52,11 +52,14 @@ public class PlaceBuyOrderController {
                 }
             case 3:
                 break;
+
+            default:
+                view.showError("That option doesn't exist, please try again.");
         }
 
     }
 
-    private void buyController (User user, CrytoCurrency currency, BigDecimal cryptoAmount,
+    private void buyController(User user, CrytoCurrency currency, BigDecimal cryptoAmount,
                                 BigDecimal maxMoney) throws InsufficientFundsException {
         if (service.ableToBuy(maxMoney, user)){
             BuyOrder order = service.publishBuyOrder(user, currency, cryptoAmount, maxMoney);

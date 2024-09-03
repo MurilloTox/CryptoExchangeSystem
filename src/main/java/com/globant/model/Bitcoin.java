@@ -18,5 +18,4 @@ public class Bitcoin extends CrytoCurrency implements Fluctuable {
         }
         return instance;
     }
-
 }

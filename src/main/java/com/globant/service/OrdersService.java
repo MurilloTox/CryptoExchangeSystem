@@ -11,12 +11,14 @@ public class OrdersService {
     private static OrdersService instance;
     private static List<Order> orders;
     private final  HashMap<User, BigDecimal> debts;
-    private final  HashMap<User, BigDecimal> cryptoDetention;
+    private final  HashMap<User, BigDecimal> bitcoinDetention;
+    private final  HashMap<User, BigDecimal> ethereumDetention;
 
     private OrdersService() {
         orders = new ArrayList<>();
         debts = new HashMap<>();
-        cryptoDetention = new HashMap<>();
+        bitcoinDetention = new HashMap<>();
+        ethereumDetention = new HashMap<>();
     }
 
     public static OrdersService getInstance() {
@@ -38,11 +40,19 @@ public class OrdersService {
         }
     }
 
-    public void addCryptoDetention(User user, BigDecimal amount) {
-        if (!cryptoDetention.containsKey(user)) {
-            cryptoDetention.put(user, amount);
+    public void addETMDetention(User user, BigDecimal amount) {
+        if (!ethereumDetention.containsKey(user)) {
+            ethereumDetention.put(user, amount);
         } else {
-            cryptoDetention.put(user, cryptoDetention.get(user).add(amount));
+            ethereumDetention.put(user, ethereumDetention.get(user).add(amount));
+        }
+    }
+
+    public void addBTCDetention(User user, BigDecimal amount) {
+        if (!bitcoinDetention.containsKey(user)) {
+            bitcoinDetention.put(user, amount);
+        } else {
+            bitcoinDetention.put(user, bitcoinDetention.get(user).add(amount));
         }
     }
 
@@ -50,8 +60,12 @@ public class OrdersService {
         debts.put(user, debts.get(user).subtract(amount));
     }
 
-    public void subtractCryptoDetention(User user, BigDecimal amount) {
-        cryptoDetention.put(user, cryptoDetention.get(user).subtract(amount));
+    public void subtractBTCDetention(User user, BigDecimal amount) {
+        bitcoinDetention.put(user, bitcoinDetention.get(user).subtract(amount));
+    }
+
+    public void subtractETMDetention(User user, BigDecimal amount) {
+        ethereumDetention.put(user, ethereumDetention.get(user).subtract(amount));
     }
 
     public BuyOrder publishBuyOrder(User buyer, CrytoCurrency currency,
@@ -77,30 +91,26 @@ public class OrdersService {
         }
     }
 
-    private boolean ableTo(HashMap<User, BigDecimal> map, BigDecimal amount, User user, CrytoCurrency currency) {
-        try {
-            if (currency instanceof Bitcoin) {
-                BigDecimal possibleDebt = map.get(user).add(amount);
-                return possibleDebt.compareTo(BigDecimal.ZERO) >= 0;
-            } else {
-                return user.consultCurrentEthereum().compareTo(amount) >= 0;
-            }
-
-        } catch (NullPointerException e) {
-            if (currency instanceof Bitcoin) {
-                return user.consultCurrentBitcoin().compareTo(amount) >= 0;
-            } else {
-                return user.consultCurrentEthereum().compareTo(amount) >= 0;
-            }
-        }
-    }
-
     public boolean ableToBuy(BigDecimal amount, User user) {
         return ableTo(debts, amount, user);
     }
 
     public boolean ableToSell(BigDecimal amount, User user, CrytoCurrency currency) {
-        return ableTo(cryptoDetention, amount, user, currency);
+        if (currency instanceof Bitcoin) {
+            try {
+                BigDecimal possibleCryptoDebt = bitcoinDetention.get(user).add(amount);
+                return possibleCryptoDebt.compareTo(BigDecimal.ZERO) >= 0;
+            } catch (NullPointerException e) {
+                return user.consultCurrentBitcoin().compareTo(amount) >= 0;
+            }
+        } else {
+            try {
+                BigDecimal possibleCryptoDebt = ethereumDetention.get(user).add(amount);
+                return possibleCryptoDebt.compareTo(BigDecimal.ZERO) >= 0;
+            } catch (NullPointerException e) {
+                return user.consultCurrentEthereum().compareTo(amount) >= 0;
+            }
+        }
     }
 
     public void checkOrders(Order newOrder) {
@@ -131,7 +141,12 @@ public class OrdersService {
                         BuyOrder order2 = (BuyOrder) order;
                         processOrders(order2, order1);
                         User user = newOrder.getUser();
-                        subtractCryptoDetention(user,newOrder.getPrice());
+                        CrytoCurrency currency = newOrder.getCrytoCurrency();
+                        if (currency instanceof Bitcoin) {
+                            subtractBTCDetention(user,newOrder.getPrice());
+                        } else {
+                            subtractETMDetention(user,newOrder.getPrice());
+                        }
                         break;
                     }
                 }

@@ -7,13 +7,14 @@ import com.globant.view.ConsoleView;
 public class RegisterUserController {
     private static RegisterUserController instance;
     private final ConsoleView view;
-    public RegisterUserController(ConsoleView view, SystemService systemService) {
+
+    private RegisterUserController(ConsoleView view) {
         this.view = view;
     }
 
-    protected static RegisterUserController getInstance(ConsoleView view, SystemService systemService) {
+    protected static RegisterUserController getInstance(ConsoleView view) {
         if (instance == null) {
-            instance = new RegisterUserController(view, systemService);
+            instance = new RegisterUserController(view);
         }
         return instance;
     }
