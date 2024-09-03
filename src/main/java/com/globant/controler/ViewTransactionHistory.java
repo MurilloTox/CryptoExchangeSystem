@@ -15,7 +15,7 @@ public class ViewTransactionHistory {
         this.service = service;
     }
 
-    public static ViewTransactionHistory getInstance(ConsoleLoggedView view, OrdersService ordersService) {
+    protected static ViewTransactionHistory getInstance(ConsoleLoggedView view, OrdersService ordersService) {
         if (instance == null) {
             instance = new ViewTransactionHistory(view, ordersService);
         }

@@ -18,7 +18,7 @@ public class RegisterUserController {
         return instance;
     }
 
-    public void execute(){
+    protected void execute(){
         String[] userInfo=view.getRegisterUser();
         String name=userInfo[0];
         String lastname=userInfo[1];

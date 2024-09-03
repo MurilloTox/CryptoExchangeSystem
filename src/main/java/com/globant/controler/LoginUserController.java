@@ -32,22 +32,8 @@ public class LoginUserController {
                     break;
                 }
             }
-            //Arreglar fallo cuando se hace el try again o directamente quitarlo
             if (notVerified){
                 throw new UnknownUserException("This user does not exist");
-                /*view.showError("This user doesn´t exist");
-                while(true){
-                    int choice = view.getNotVerifiedUserChoice();
-                    System.out.println(" ");
-                    switch(choice){
-                        case 1:
-                            execute();
-                            break;
-                        case 2:
-                            RootController.getInstance().run();
-                            break;
-                    }
-                }*/
             }
         } catch (UnknownUserException e) {
             System.out.println(e.getMessage());

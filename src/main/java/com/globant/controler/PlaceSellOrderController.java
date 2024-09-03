@@ -17,7 +17,7 @@ public class PlaceSellOrderController {
         this.service = service;
     }
 
-    public static PlaceSellOrderController getInstance(ConsoleLoggedView view, OrdersService service) {
+    protected static PlaceSellOrderController getInstance(ConsoleLoggedView view, OrdersService service) {
         if (instance == null) {
             instance = new PlaceSellOrderController(view, service);
         }

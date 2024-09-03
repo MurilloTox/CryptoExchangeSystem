@@ -79,8 +79,13 @@ public class OrdersService {
 
     private boolean ableTo(HashMap<User, BigDecimal> map, BigDecimal amount, User user, CrytoCurrency currency) {
         try {
-            BigDecimal possibleDebt = map.get(user).add(amount);
-            return possibleDebt.compareTo(BigDecimal.ZERO) >= 0;
+            if (currency instanceof Bitcoin) {
+                BigDecimal possibleDebt = map.get(user).add(amount);
+                return possibleDebt.compareTo(BigDecimal.ZERO) >= 0;
+            } else {
+                return user.consultCurrentEthereum().compareTo(amount) >= 0;
+            }
+
         } catch (NullPointerException e) {
             if (currency instanceof Bitcoin) {
                 return user.consultCurrentBitcoin().compareTo(amount) >= 0;

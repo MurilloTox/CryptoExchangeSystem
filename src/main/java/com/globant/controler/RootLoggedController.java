@@ -18,12 +18,10 @@ public class RootLoggedController {
     private final PlaceSellOrderController placeSellOrderController;
     private final ViewTransactionHistory viewTransactionHistory;
 
-
     private RootLoggedController(ConsoleLoggedView view, SystemService systemService, OrdersService ordersService) {
         this.viewLogged = view;
         this.systemService = systemService;
         this.ordersService = ordersService;
-
         this.viewWalletBalanceController = ViewWalletBalanceController.getInstance(viewLogged, systemService);
         this.depositController = DepositController.getInstance(viewLogged, systemService);
         this.exchangeController = ExchangeController.getInstance(viewLogged, systemService);

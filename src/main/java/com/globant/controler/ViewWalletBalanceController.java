@@ -13,14 +13,14 @@ public class ViewWalletBalanceController {
         this.systemService = systemService;
     }
 
-    public static ViewWalletBalanceController getInstance(ConsoleLoggedView consoleLoggedView, SystemService systemService) {
+    protected static ViewWalletBalanceController getInstance(ConsoleLoggedView consoleLoggedView, SystemService systemService) {
         if (instance == null) {
             instance = new ViewWalletBalanceController(consoleLoggedView, systemService);
         }
         return instance;
     }
 
-    public void execute() {
+    protected void execute() {
         view.showUserBalance(systemService.currentUserBalance());
     }
 }
